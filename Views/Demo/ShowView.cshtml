@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = ViewData["PageTitle"];
+}
+
+<h1>Добро пожаловать, @ViewBag.UserName!</h1>
+<p>Это представление связано с действием ShowView контроллера Demo</p>
+<img src="https://i.ibb.co/BHbDtXXT/Berries-jpg.webp" class="berries" />
+<p>Текущее время: @DateTime.Now.ToString("HH:mm::ss")</p>
+<hr />
+<h2>Информация из ViewBag</h2>
+<ul>
+    <li>Имя пользователя: @ViewBag.Username</li>
+    <li>Дата регистрации: @ViewBag.RegistrationDate.ToString("dd.MM.yyyy")</li>
+</ul>
+<h2>Информация из ViewData</h2>
+<ul>
+    <li>Заголовок страницы: @ViewData["PageTitle"]</li>
+    <li>Количество посещений: @ViewData["VisitCount"]</li>
+</ul>
+
+<style>
+    p{
+        font-style: italic;
+    }
+    .berries{
+        object-fit: cover;
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+</style>
