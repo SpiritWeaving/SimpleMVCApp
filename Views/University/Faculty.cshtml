@@ -1,0 +1,59 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var faculty = ViewBag.Faculty;
+    var departments = ViewBag.Departments;
+    ViewData["Title"] = faculty.Name;
+}
+
+<h1>Информация о факультете</h1>
+
+<img src=@faculty.LogoPath
+     class="logo" alt="Логотип факультета"/>
+
+<p><strong>Название: </strong>@faculty.Name</p>
+<p><strong>Заведующий: </strong>@faculty.Dean</p>
+<p><strong>Описание: </strong>@faculty.Description</p>
+<p><strong>Email: </strong><a href="mailto: @faculty.Email">@faculty.Email</a></p>
+<p><strong>Вступительные экзамены: </strong>@faculty.Exams</p>
+<p><strong>Количество бюджетных мест: </strong>@faculty.BudgetPlaces</p>
+<p><strong>Цена за обучение (в год): </strong>@faculty.Price Р</p>
+
+<h2>Кафедры:</h2>
+<ul class="department-list">
+    @foreach (var department in departments)
+    {
+        <li class="department-list-item">
+            @department.Name
+        </li>
+    }
+</ul>
+@*Ссылка от главной("корневой") страницы*@
+<a href="~/University/Departments/@faculty.Id"
+class="more-button">
+    Подробнее
+</a>
+
+<style>
+    .logo{
+        inline-size: 200px;
+        block-size: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid currentColor;
+        object-position: center;
+        margin-block: 30px;
+    }
+
+    .department-list-item{
+        list-style-type: circle;
+    }
+
+    .more-button{
+        appearance: none;
+        color: currentColor;
+        text-decoration: none;
+        border-bottom: 1px currentColor solid;
+    }
+</style>

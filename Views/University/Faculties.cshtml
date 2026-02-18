@@ -1,0 +1,86 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var faculties = ViewBag.Faculties;
+    ViewData["Title"] = "Факультеты";
+}
+
+<section class="faculties">
+    <h1>Факультеты:</h1>
+    <ul class="faculties-list">
+    @foreach (var faculty in faculties)       
+        {
+        var departments = faculty.Departments;
+        <li class="faculties-list-item">
+            <article class="faculty-card">
+                <h3>@faculty.Name</h3>
+                <p><strong>Описание: </strong>@faculty.Description</p>                
+                <p><strong>Вступительные экзамены: </strong>@faculty.Exams</p>                
+                <p><strong>Цена за обучение (в год): </strong>@faculty.Price Р</p>
+                <a class="more-link" href="~/University/Faculty/@faculty.Name">Подробнее</a>
+
+                <ul class="department-list">
+                     @foreach (var department in departments)
+                     {
+                        <li class="department-list-item">
+                            <section class="department-card">
+                                <img class="department-card-img" 
+                                src = @department.ImagePath/>
+                                <div class="department-card-description">
+                                    <h3>@department.Name</h3>
+                                    <p>@department.Profile</p>
+                                </div>
+                            </section>
+                        </li>    
+                     }
+                </ul>
+            </article>
+            <hr />
+        </li>
+    }
+    </ul>
+</section>
+
+<style>    
+    .more-link {
+        appearance: none;
+        color: currentColor;
+        text-decoration: none;
+        border-bottom: 1px currentColor solid;
+        display: inline-block;
+        margin-block-end: 30px;
+        cursor: pointer;
+    }
+
+    .faculties-list{
+        list-style: none;
+    }
+
+    .department-card{
+        border: 1px dotted currentColor;
+        padding: 15px;
+        inline-size: 70%;
+        block-size: 160px;
+        display: flex;
+        justify-content: space-between;
+        margin-block-end: 30px;
+        border-radius: 10px;
+    }
+
+    .department-card-img{
+        border-radius: 10px;
+        inline-size: 130px;
+        block-size: 130px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .department-list{
+        list-style: none;
+    }
+
+    .department-card-description{
+
+    }
+</style>

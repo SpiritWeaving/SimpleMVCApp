@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var departments = ViewBag.Departments;
+    string facultyName = ViewBag.Faculty.Name;
+    ViewData["Title"] = $"{facultyName}: Кафедры";
+}
+
+<section class="departments">
+    <h1>@facultyName: Кафедры</h1>
+    <ul class="departments-list">
+        @foreach (var department in departments)
+        {
+            <li class="departments-list-item">
+                <article>
+                    <img src=@department.ImagePath
+                         class="logo" alt="Логотип кафедры" />
+
+                    <p><strong>Название: </strong>@department.Name</p>
+                    <p><strong>Заведующий: </strong>@department.Head</p>
+                    <p><strong>Профильные направления: </strong>@department.Profile</p>
+                    <p><strong>Email: </strong><a href="mailto: @department.Email">@department.Email</a></p>                    
+                    <p><strong>Преподаватели: </strong>@department.Professors</p>
+                    <p><strong>Аудитории: </strong>@department.Location</p>
+                </article>
+                <hr />
+            </li>            
+        }
+    </ul>
+</section>
+
+<style>
+    .logo {
+        inline-size: 200px;
+        block-size: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid currentColor;
+        object-position: center;
+        margin-block: 30px;
+    }
+
+    .departments-list{
+        list-style: none;
+    }
+</style>

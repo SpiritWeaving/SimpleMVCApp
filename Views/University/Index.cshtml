@@ -1,0 +1,165 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var faculties = ViewBag.Faculties;
+    ViewData["Title"] = "Главная";
+}
+
+<h1>Добро пожаловать в JamUniversity</h1>
+
+@*Фантазии нет, описание придумывай сам -_-*@
+<section class="university-info">
+    <h3>Об университете:</h3>
+    <p>
+        JamUniversity — место, где знания становятся основой будущего!
+        Современные лаборатории, опытные преподаватели-практики и уникальные образовательные программы
+        ждут абитуриентов. Мы помогаем раскрыть таланты, освоить востребованные профессии и построить
+        успешную карьеру. Индивидуальный подход к каждому студенту. Начните свой путь к большим открытиям уже сегодня!
+    </p>
+    <p><strong>Дата:</strong> @ViewBag.Time</p>
+</section>
+
+<section class="cover">
+    <h1 class="cover-title">Твоё будущее начинается здесь</h1>
+    <div class="cover-description">
+        <p>JamUniversity — это не просто диплом. Это друзья на 
+            всю жизнь, опытные наставники и твой первый шаг к большой карьере.
+        </p>
+        <a class="cover-button" href="#faculties">Выбрать факультет</a>
+    </div>    
+</section>
+
+<section class="faculties" id="faculties">
+    <h1>Наши Факультеты:</h1>
+    <ul class="faculties-list">
+        @foreach (var faculty in faculties)
+        {
+            <li class="faculties-list-item">
+                <article class="faculty-card" style="background-image: url(@faculty.LogoPath);">
+                    <div class="faculty-card-description">
+                        <h3>@faculty.Name</h3>
+                        <p>@faculty.Description</p>
+                    </div>
+                    <a class="more-button" href="~/University/Faculty/@faculty.Name">Подробнее</a>
+                </article>
+            </li>
+        }
+    </ul>
+    <a href="~/University/Faculties/"
+       class="more-link">
+        Подробнее
+    </a>
+</section>
+
+<style>
+    .more-link{
+        appearance: none;
+        color: currentColor;
+        text-decoration: none;
+        border-bottom: 1px currentColor solid;
+    }
+
+    .cover{
+        margin-block: 30px;
+        margin-inline: auto;
+        inline-size: 95%;
+        padding: 40px;
+        background-image: url("https://i.ibb.co/NdwntSdD/cards.png");
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        z-index: 0;
+        color: #fff;
+    }
+
+    .cover-title{
+        font-size: 60px;
+        letter-spacing: 10%;
+        padding-block: 50px;
+    }
+
+    .cover-button{
+        background-color: transparent;
+        appearance: none;
+        color: #fff;
+        padding: 10px;
+        border: 1px solid #fff;        
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .cover-description p{
+        inline-size: 50%;
+    }
+
+    .cover-description{
+        font-size: 20px;
+        letter-spacing: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .more-button{
+        background-color: transparent;
+        appearance: none;
+        color: #fff;
+        padding: 10px;
+        border: 1px solid #fff;
+        position: absolute;
+        bottom: 15px; left: 15px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .faculty-card-description{
+        position: relative;
+        block-size: 70%;
+    }
+
+    .faculty-card-description p{
+        position: absolute;
+        bottom: 0; left: 0;
+    }
+
+    .faculty-card{
+        color: #fff;
+        inline-size: 350px;
+        block-size: 350px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        z-index: 0;
+        padding: 15px;
+    }
+
+    .faculty-card::before, .cover::before{
+        content: '';
+        inline-size: 100%;
+        block-size: 100%;
+        inset: 0;
+        z-index: -1;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+    }
+
+    .faculties{
+        inline-size: 90%;
+        margin-inline: auto;
+        margin-block: 30px;
+    }
+
+    .faculties h1{
+        margin-block-end: 30px;
+    }
+
+    .faculties-list {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+</style>
