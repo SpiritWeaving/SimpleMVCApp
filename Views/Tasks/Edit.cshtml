@@ -1,0 +1,109 @@
+﻿@model MvcApp.Models.Task
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Редактирование задачи";
+}
+
+<h1>Редактирование задачи</h1>
+<hr />
+<div class="row">
+    <form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <p>Приоритет:</p>
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Priority, "Высокий")
+                Высокий
+            </label>
+        </div>
+
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Priority, "Средний")
+                Средний
+            </label>
+        </div>
+
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Priority, "Низкий")
+                Низкий
+            </label>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DueDate"></label>
+        <input asp-for="DueDate" type="date" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Assignee"></label>
+        <input asp-for="Assignee" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <p>Статус:</p>
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Status, "К выполнению")
+                К выполнению
+            </label>
+        </div>
+
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Status, "В работе")
+                В работе
+            </label>
+        </div>
+
+        <div class="col mb-2">
+            <label>
+                @Html.RadioButtonFor(m => m.Status, "Выполнено")
+                Выполнено
+            </label>
+        </div>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input asp-for="IsCompleted" class="form-check-input" />
+        <label asp-for="IsCompleted" class="form-check-label"></label>
+    </div>
+
+    <div class="mb-3">
+        <input type="submit" value="Сохранить" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+    </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        // Дополнительная валидация на клиенте
+        $(document).ready(function () {
+        // Подсветка обязательных полей
+        $('input[required], textarea[required]').addClass('border-primary');
+        });
+    </script>
+}

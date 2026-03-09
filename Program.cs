@@ -1,8 +1,15 @@
+using MvcApp.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//–егистрируем репозиторий 
+// AddScoped означает, что один экземпл€р репозитори€ будет создан на каждый HTTP-запрос.
+// Ёто оптимально дл€ веб-приложений.
+builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+builder.Services.AddSingleton<ITaskRepository, InMemoryTaskRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

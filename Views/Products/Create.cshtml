@@ -1,0 +1,102 @@
+﻿@model MvcApp.Models.Task
+
+@{
+    ViewData["Title"] = "Добавление задачи";
+}
+
+<h1>Добавление задачи</h1>
+<div class="row">
+    <div class="col-md-6">        
+        <form asp-controller="Tasks" asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" required />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Приоритет:</label>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Priority" value="Высокий" checked />
+                        Высокий
+                    </label>
+                </div>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Priority" value="Средний" />
+                        Средний
+                    </label>
+                </div>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Priority" value="Низкий" />
+                        Низкий
+                    </label>
+                </div>
+                <span asp-validation-for="Priority" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DueDate" class="form-label"></label>
+                <input asp-for="DueDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DueDate" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Assignee" class="form-label"></label>
+                <input asp-for="Assignee" type="text" class="form-control" />
+                <span asp-validation-for="Assignee" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Статус:</label>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Status" value="К выполнению" checked />
+                        К выполнению
+                    </label>
+                </div>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Status" value="В работе" />
+                        В работе
+                    </label>
+                </div>
+                <div class="col mb-2">
+                    <label>
+                        <input type="radio" asp-for="Status" value="Выполнено" />
+                        Выполнено
+                    </label>
+                </div>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="IsCompleted" class="form-check-input" />
+                <label asp-for="IsCompleted" class="form-check-label"></label>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+                <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
