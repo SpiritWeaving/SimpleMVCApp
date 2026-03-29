@@ -2,10 +2,10 @@
 
 namespace MvcApp.Models
 {
-    public class Task
+    public class TaskObject
     {
         //Конструктор по умолчанию
-        public Task()
+        public TaskObject()
         {
             Title = string.Empty;
             Description = string.Empty;
@@ -23,7 +23,7 @@ namespace MvcApp.Models
         [Display(Name = "Название задачи")]
         public string Title { get; set; }
 
-        [StringLength(500)]
+        [StringLength(500, MinimumLength = 0)]
         [Display(Name = "Описание")]
         public string Description { get; set; }
 

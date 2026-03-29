@@ -45,7 +45,7 @@ namespace MvcApp.Controllers
         public IActionResult Create(Product product)
         {
             // Проверяем, прошла ли модель валидацию (атрибуты из шага 1).
-            if (!ModelState.IsValid) {
+            if (ModelState.IsValid) {
                 product.CreatedDate = DateTime.Now;
                 repository.Add(product);
                 TempData["SuccessMessage"] = "Товар успешно добавлен!";

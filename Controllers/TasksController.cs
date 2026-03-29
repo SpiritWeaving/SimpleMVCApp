@@ -42,21 +42,11 @@ namespace MvcApp.Controllers
         // Действие для обработки данных, отправленных с формы создания.
         [HttpPost] // Означает, что этот метод обрабатывает только POST-запросы
         [ValidateAntiForgeryToken] // Защита от межсайтовой подделки запроса (CSRF)
-        public IActionResult Create(Models.Task task)
+        public IActionResult Create(TaskObject task)
         {
             // Проверяем, прошла ли модель валидацию (атрибуты из шага 1).
             if (ModelState.IsValid)
-            {
-                // ДОБАВЛЯЕМ ОТЛАДОЧНУЮ ИНФОРМАЦИЮ
-                Console.WriteLine($"=== ПОПЫТКА ДОБАВЛЕНИЯ ЗАДАЧИ ===");
-                Console.WriteLine($"Title: {task.Title}");
-                Console.WriteLine($"Description: {task.Description}");
-                Console.WriteLine($"Priority: {task.Priority}");
-                Console.WriteLine($"Status: {task.Status}");
-                Console.WriteLine($"DueDate: {task.DueDate}");
-                Console.WriteLine($"Assignee: {task.Assignee}");
-                Console.WriteLine($"IsCompleted: {task.IsCompleted}");
-
+            {               
                 repository.Add(task);
                 TempData["SuccessMessage"] = "Задача успешно добавлена!";
                 return RedirectToAction(nameof(Index));
@@ -78,7 +68,7 @@ namespace MvcApp.Controllers
         // Обрабатывает данные, отправленные с формы редактирования.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Models.Task task)
+        public IActionResult Edit(int id, TaskObject task)
         {
             if (id != task.Id) // Проверка, совпадает ли Id в маршруте с Id в модели
                 return BadRequest();

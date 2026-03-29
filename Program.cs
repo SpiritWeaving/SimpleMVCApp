@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using MvcApp.Data;
 using MvcApp.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,12 +7,28 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Регистрация контекста базы данных
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+.LogTo(Console.WriteLine, LogLevel.Information) // Логирование SQL
+.EnableSensitiveDataLogging() // Показывать параметры
+);
+
 //Регистрируем репозиторий 
 // AddScoped означает, что один экземпляр репозитория будет создан на каждый HTTP-запрос.
 // Это оптимально для веб-приложений.
-builder.Services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-builder.Services.AddSingleton<ITaskRepository, InMemoryTaskRepository>();
+builder.Services.AddScoped<IProductRepository, EfProductRepository>();
+builder.Services.AddScoped<ITaskRepository, EfTaskRepository>();
+
+//Сборка приложения
 var app = builder.Build();
+
+//Инициализация базы данных тестовыми данными
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await SeedData.InitializeAsync(dbContext);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

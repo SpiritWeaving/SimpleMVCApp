@@ -12,6 +12,7 @@ namespace MvcApp.Models
             Name = string.Empty;
             Category = string.Empty;
             Description = string.Empty;
+            Brand = string.Empty;
         }
         public int Id { get; set; }
 
@@ -43,6 +44,11 @@ namespace MvcApp.Models
         [Display(Name = "Дата добавления")]
         [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
+
+        [Display(Name = "Производитель")]
+        [StringLength(50)]
+        public string Brand { get; set; }        
+        
         [Display(Name = "В наличии")]
         public bool InStock { get; set; }
         // Метод для расчета цены со скидкой

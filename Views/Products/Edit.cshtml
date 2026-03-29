@@ -2,8 +2,7 @@
 @{
     ViewData["Title"] = "Редактирование товара";
 }
- <
-h1>Редактирование товара</h1>
+<h1>Редактирование товара</h1>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -15,6 +14,11 @@ h1>Редактирование товара</h1>
                 <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Brand" class="form-label"></label>
+                <input asp-for="Brand" class="form-control" />
+                <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Category" class="form-label"></label>

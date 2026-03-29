@@ -5,13 +5,13 @@ namespace MvcApp.Repositories
 {
     public class InMemoryTaskRepository : ITaskRepository
     {
-        private List<Models.Task> repository;
+        private List<TaskObject> repository;
         private int nextId = 1;
 
         //Конструктор по умолчанию
         public InMemoryTaskRepository()
         {
-            repository = new List<Models.Task>();
+            repository = new List<TaskObject>();
             SeedData();
         }
 
@@ -20,7 +20,7 @@ namespace MvcApp.Repositories
         {
             DateTime later = DateTime.Now.AddDays(5);
             DateTime earlier = DateTime.Now.AddDays(-3);
-            Add(new Models.Task
+            Add(new TaskObject
             {                
                 Title = "Разработать архитектуру базы данных",
                 Description = "Создать " +
@@ -32,7 +32,7 @@ namespace MvcApp.Repositories
                 DueDate = later,
             });            
 
-            Add(new Models.Task
+            Add(new TaskObject
             {                
                 Title = "Провести код-ревью",
                 Description = "Проверить пул-реквест от команды фронтенда",
@@ -43,7 +43,7 @@ namespace MvcApp.Repositories
                 DueDate = earlier,
             });
 
-            Add(new Models.Task
+            Add(new TaskObject
             {
                 Title = "Написать документацию API",
                 Description = "Описать все эндпоинты и форматы запросов/ответов",
@@ -54,7 +54,7 @@ namespace MvcApp.Repositories
                 DueDate = later,
             });
 
-            Add(new Models.Task
+            Add(new TaskObject
             {
                 Title = "Подготовить отчет для заказчика",
                 Description = "",
@@ -66,21 +66,21 @@ namespace MvcApp.Repositories
             });
         }
         //Выбрать все задания
-        public IEnumerable<Models.Task> GetAllTasks() => repository;
+        public IEnumerable<TaskObject> GetAllTasks() => repository;
 
         //Выбрать задание по id
-        public Models.Task? GetById(int id) =>
+        public TaskObject? GetById(int id) =>
         repository.FirstOrDefault(p => p.Id == id);
 
         //Добавить новое задание
-        public void Add(Models.Task task)
+        public void Add(TaskObject task)
         {
             task.Id = nextId++;
             repository.Add(task);
         }
 
         //Обновить существующее задание
-        public void Update(Models.Task task)
+        public void Update(TaskObject task)
         {
             var existing = GetById(task.Id);
             if (existing != null)
@@ -103,12 +103,12 @@ namespace MvcApp.Repositories
         }
 
         //Выбрать по приоритету
-        public IEnumerable<Models.Task> GetByPriority(string priority) => 
+        public IEnumerable<TaskObject> GetByPriority(string priority) => 
             repository.Where(task => task.Priority.Equals(priority,
                 StringComparison.OrdinalIgnoreCase));
 
         //Только просроченные задачи
-        public IEnumerable<Models.Task> NotOverDue() =>
+        public IEnumerable<TaskObject> NotOverDue() =>
         repository.Where(task => !task.IsOverdue());
     }
 }

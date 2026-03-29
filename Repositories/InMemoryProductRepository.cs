@@ -31,7 +31,9 @@ namespace MvcApp.Repositories
             // Добавляем тестовые данные
             Add(new Product
             {
+                Id = nextId,
                 Name = "Ноутбук ASUS",
+                Brand = "ASUS",
                 Price = 75000,
                 Category = "Электроника",
                 Description = "Игровой ноутбук",
@@ -40,7 +42,9 @@ namespace MvcApp.Repositories
             });
             Add(new Product
             {
+                Id = nextId,
                 Name = "Смартфон Samsung",
+                Brand = "Samsung",
                 Price = 45000,
                 Category = "Электроника",
                 Description = "Galaxy S23",
@@ -67,6 +71,7 @@ products.FirstOrDefault(p => p.Id == id);
             if (existing != null)
             {
                 existing.Name = product.Name;
+                existing.Brand = product.Brand;
                 existing.Price = product.Price;
                 existing.Category = product.Category;
                 existing.Description = product.Description;

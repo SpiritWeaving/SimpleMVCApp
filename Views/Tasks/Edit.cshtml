@@ -1,4 +1,4 @@
-﻿@model MvcApp.Models.Task
+﻿@model MvcApp.Models.TaskObject
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -21,7 +21,7 @@
 
     <div class="mb-3">
         <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+        <textarea asp-for="Description" class="form-control" rows="3" required="false"></textarea>
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 

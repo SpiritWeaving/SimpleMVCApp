@@ -6,18 +6,18 @@ namespace MvcApp.Repositories
     public interface ITaskRepository
     {
         //Вернуть все задачи
-        public IEnumerable<Models.Task> GetAllTasks();
+        public IEnumerable<TaskObject> GetAllTasks();
         //Выбрать задачу по id
-        public Models.Task? GetById(int id);
+        public TaskObject? GetById(int id);
         //Добавить задачу
-        public void Add(Models.Task task);
+        public void Add(TaskObject task);
         //Обновить существующую задачу
-        public void Update(Models.Task task);
+        public void Update(TaskObject task);
         //Удалить задачу
         public void Delete(int id);
         //Выбрать по приоритету
-        public IEnumerable<Models.Task> GetByPriority(string priority);
+        public IEnumerable<TaskObject> GetByPriority(string priority);
         //Только непросроченные задачи
-        public IEnumerable<Models.Task> NotOverDue();
+        public IEnumerable<TaskObject> NotOverDue();
     }
 }
