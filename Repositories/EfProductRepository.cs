@@ -76,5 +76,107 @@ namespace MvcApp.Repositories
             .Where(p => p.InStock)
             .ToList();
         }
+
+        // ========== НОВЫЕ LINQ-МЕТОДЫ ==========
+        /// <summary>
+        /// Фильтрация товаров по диапазону цен
+        /// </summary>
+        public IEnumerable<Product> GetProductsByPriceRange(decimal minPrice, 
+            decimal maxPrice) => context.Products.Where(p => p.Price >= minPrice && p.Price <= maxPrice)
+        .OrderBy(p => p.Price)
+        .ToList();
+
+        /// <summary>
+        /// Получение топ N самых дорогих товаров
+        /// </summary>
+        public IEnumerable<Product> GetTopExpensiveProducts(int count) =>
+        context.Products.OrderByDescending(p => p.Price)
+        .Take(count).ToList();
+        
+        /// <summary>
+        /// Поиск товаров по названию, описанию и категории
+        /// </summary>
+        public IEnumerable<Product> SearchProducts(string searchTerm) =>
+        context.Products.Where(p => p.Name.Contains(searchTerm) ||
+        p.Description.Contains(searchTerm) ||
+        p.Category.Contains(searchTerm))
+        .OrderBy(p => p.Name).ToList();
+
+        /// <summary>
+        /// Средняя цена всех товаров
+        /// </summary>
+        public decimal GetAveragePrice() =>
+        context.Products.Average(p => p.Price);
+
+        /// <summary>
+        /// Общее количество товаров
+        /// </summary>
+        public int GetTotalCount() => context.Products.Count();
+
+        /// <summary>
+        /// Диапазон цен (минимальная и максимальная)
+        /// </summary>
+        public (decimal MinPrice, decimal MaxPrice) GetPriceRange()
+        {
+            return (
+            MinPrice: context.Products.Min(p => p.Price),
+            MaxPrice: context.Products.Max(p => p.Price)
+            );
+        }
+
+        /// <summary>
+        /// Проверка наличия товаров в указанной категории
+        /// </summary>
+        public bool AnyInCategory(string category) =>
+        context.Products.Any(p => p.Category == category);
+
+        /// <summary>
+        /// Группировка товаров по категориям
+        /// </summary>
+        public IEnumerable<IGrouping<string, Product>>
+        GetProductsGroupedByCategory() =>
+        context.Products
+        .GroupBy(p => p.Category)
+        .OrderBy(g => g.Key)
+        .ToList();
+
+        /// <summary>
+        /// Пагинация: получение товаров для указанной страницы
+        /// </summary>
+        public IEnumerable<Product> GetProductsWithPagination(int page, int
+        pageSize) =>
+        context.Products.OrderBy(p => p.Id)
+        .Skip((page - 1) * pageSize) // Пропустить n элементов (сколько страниц "пролистали")
+        .Take(pageSize) // Взять k элементов (сколько элементов на странице)
+        .ToList();
+
+        /// <summary>
+        /// Общее количество страниц
+        /// </summary>
+        public int GetTotalPages(int pageSize)
+        {
+            var totalCount = GetTotalCount();
+            return (int)Math.Ceiling(totalCount / (double)pageSize);
+        }
+
+        // ========== АСИНХРОННЫЕ МЕТОДЫ ==========
+        public async Task<IEnumerable<Product>> GetProductsByPriceRangeAsync(decimal
+        minPrice, decimal maxPrice) =>
+        await context.Products
+        .Where(p => p.Price >= minPrice && p.Price <= maxPrice)
+        .OrderBy(p => p.Price).ToListAsync();
+
+        public async Task<decimal> GetAveragePriceAsync() =>
+        await context.Products.AverageAsync(p => p.Price);
+
+        public async Task<int> GetTotalCountAsync() =>
+        await context.Products.CountAsync();
+
+        public async Task<IEnumerable<IGrouping<string, Product>>>
+        GetProductsGroupedByCategoryAsync() =>
+        await context.Products
+        .GroupBy(p => p.Category)
+        .OrderBy(g => g.Key)
+        .ToListAsync();
     }
 }

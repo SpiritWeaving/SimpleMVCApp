@@ -90,6 +90,11 @@ namespace MvcApp.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ImagePath")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("/images/empty.png");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 

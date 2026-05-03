@@ -28,8 +28,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">Товары</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="linqDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                LINQ-запросы
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="linqDropdown">
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="ByPrice">Фильтр по цене</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="TopExpensive">Топ дорогих</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Search">Поиск</a></li>
+                                <li><hr class="dropdown-divider"></li> @* Красивый разделитель *@
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="GroupedByCategory">По категориям</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Statistics">Статистика</a></li>
+                                <li><a class="dropdown-item" asp-controller="Products" asp-action="Paginated">Пагинация</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tasks" asp-action="Index">Задачи</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="linqDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                LINQ-запросы задач
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="linqDropdown">                               
+                                <li><a class="dropdown-item" asp-controller="Tasks" asp-action="Search">Поиск</a></li>                                
+                                <li><a class="dropdown-item" asp-controller="Tasks" asp-action="GroupedByStatus">По статусу</a></li>                                
+                                <li><a class="dropdown-item" asp-controller="Tasks" asp-action="Paginated">Пагинация</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

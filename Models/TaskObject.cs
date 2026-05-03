@@ -13,6 +13,7 @@ namespace MvcApp.Models
             Priority = "Средний";
             Status = "К выполнению";
             IsCompleted = false;
+            ImagePath = "empty.png";
             CreatedDate = DateTime.Now;
         }
         public int Id { get; set; }
@@ -30,6 +31,9 @@ namespace MvcApp.Models
         //Низкий, Средний, Высокий, Критичный        
         [Display(Name = "Приоритет")]
         public string Priority { get; set; }
+
+        [Display(Name = "Изображение")]
+        public string? ImagePath { get; set; }
 
         //Исполнитель
         [Display(Name = "Исполнитель")]
@@ -59,6 +63,7 @@ namespace MvcApp.Models
                 return false;
         }
 
+        [Display(Name = "Дата создания")]
         public DateTime CreatedDate { get; set; }
     }
 }

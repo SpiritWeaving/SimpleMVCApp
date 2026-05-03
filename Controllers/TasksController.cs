@@ -127,5 +127,37 @@ namespace MvcApp.Controllers
             return View("Index", tasks); // Явно указываем,
                                             // что нужно использовать представление Index.cshtml
         }
+
+        /*Новые LINQ действия*/
+
+        // GET: /Tasks/Search?term=Нарисовать
+        public IActionResult Search(string term)
+        {
+            var tasks = repository.SearchTasks(term);
+            ViewBag.SearchTerm = term;
+            ViewBag.Title = $"Результаты поиска: {term}";
+            ViewBag.Count = tasks.Count();
+            return View(tasks);
+        }
+
+        // GET: /Products/Paginated?page=1
+        public IActionResult Paginated(int page = 1, int pageSize = 5)
+        {
+            var products = repository.GetProductsWithPagination(page, pageSize);
+            var totalPages = repository.GetTotalPages(pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPreviousPage = page > 1;
+            ViewBag.HasNextPage = page < totalPages;
+            return View(products);
+        }
+
+        // GET: /Products/GroupedByCategory
+        public IActionResult GroupedByStatus()
+        {
+            var tasks = repository.GetAllTasks(); // Все товары
+            return View(tasks);
+        }
     }
 }

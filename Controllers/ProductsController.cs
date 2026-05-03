@@ -123,5 +123,80 @@ namespace MvcApp.Controllers
             return View("Index", products); // Явно указываем,
                                             // что нужно использовать представление Index.cshtml
         }
+
+        /*Новые LINQ действия*/
+        // GET: /Products/ByPrice?min=100&max=1000
+        public IActionResult ByPrice(decimal min, decimal max)
+        {
+            var products = repository.GetProductsByPriceRange(min, max);
+            ViewBag.MinPrice = min;
+            ViewBag.MaxPrice = max;
+            ViewBag.Title = $"Товары от {min:C} до {max:C}";
+            return View(products);
+        }
+        // GET: /Products/TopExpensive?count=5
+        public IActionResult TopExpensive(int count = 5)
+        {
+            var products = repository.GetTopExpensiveProducts(count);
+            ViewBag.Title = $"Топ {count} самых дорогих товаров";
+            ViewBag.Count = count;
+            return View(products);
+        }
+        // GET: /Products/Search?term=ноутбук
+        public IActionResult Search(string term)
+        {
+            //if (string.IsNullOrWhiteSpace(term))
+            //{
+            //    return RedirectToAction(nameof(Index));
+            //}
+            var products = repository.SearchProducts(term);
+            ViewBag.SearchTerm = term;
+            ViewBag.Title = $"Результаты поиска: {term}";
+            ViewBag.Count = products.Count(); 
+            return View(products);
+        }
+        // GET: /Products/Statistics
+        public IActionResult Statistics()
+        {
+            // Получаем все товары из репозитория
+            var products = repository.GetAll();
+            // Вычисляем общую статистику
+            var stats = new ProductsStatisticsViewModel
+            {
+                TotalCount = repository.GetTotalCount(),
+                AveragePrice = repository.GetAveragePrice(),
+                InStockCount = repository.GetInStock().Count(),
+                PriceRange = repository.GetPriceRange(),
+                Categories = products.GroupBy(p => p.Category)
+                .Select(g => new CategoryStatViewModel
+                {
+                    Category = g.Key ?? "Без категории",
+                    Count = g.Count(),
+                    AveragePrice = g.Average(p => p.Price),
+                    MinPrice = g.Min(p => p.Price),
+                    MaxPrice = g.Max(p => p.Price)
+                })
+                .OrderBy(c => c.Category)
+            };
+            return View(stats);
+        }
+        // GET: /Products/GroupedByCategory
+        public IActionResult GroupedByCategory()
+        {
+            var products = repository.GetAll(); // Все товары
+            return View(products);
+        }
+        // GET: /Products/Paginated?page=1
+        public IActionResult Paginated(int page = 1, int pageSize = 5)
+        {
+            var products = repository.GetProductsWithPagination(page, pageSize);
+            var totalPages = repository.GetTotalPages(pageSize);
+            ViewBag.CurrentPage = page;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.HasPreviousPage = page > 1;
+            ViewBag.HasNextPage = page < totalPages;
+            return View(products);
+        }
     }
 }

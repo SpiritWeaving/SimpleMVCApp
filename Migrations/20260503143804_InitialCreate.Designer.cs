@@ -12,7 +12,7 @@ using MvcApp.Data;
 namespace MvcApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260329101957_InitialCreate")]
+    [Migration("20260503143804_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -92,6 +92,11 @@ namespace MvcApp.Migrations
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("/images/empty.png");
 
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");

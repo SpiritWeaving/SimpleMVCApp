@@ -56,6 +56,10 @@ namespace MvcApp.Data
                 //Status
                 entity.Property(p => p.Status)
                 .HasDefaultValue("К выполнению");
+
+                //Status
+                entity.Property(p => p.ImagePath).IsRequired(false)
+                .HasDefaultValue("empty.png");
             });
         }
     }

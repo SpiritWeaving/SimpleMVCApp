@@ -39,6 +39,7 @@ namespace MvcApp.Migrations
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Priority = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Средний"),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "/images/empty.png"),
                     Assignee = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "К выполнению"),
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),

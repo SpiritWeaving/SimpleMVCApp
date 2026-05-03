@@ -19,5 +19,25 @@ namespace MvcApp.Repositories
         public IEnumerable<TaskObject> GetByPriority(string priority);
         //Только непросроченные задачи
         public IEnumerable<TaskObject> NotOverDue();
+
+        //Новые LINQ методы 
+        public IEnumerable<TaskObject> OverDue();
+
+        // Поиск по тексту
+        public IEnumerable<TaskObject> SearchTasks(string searchTerm);
+        // Пагинация
+        public IEnumerable<TaskObject> GetProductsWithPagination(int page, int pageSize);
+        public int GetTotalPages(int pageSize);
+        public int GetTotalCount();        
+        
+        // Группировка
+        public IEnumerable<IGrouping<string, TaskObject>> GetTasksGroupedByStatus();
+
+
+        //Асинхронные версии
+        Task<IEnumerable<TaskObject>> GetAllTasksAsync();
+        Task<TaskObject?> GetByIdAsync(int id);
+        Task<int> GetTotalCountAsync();
+        Task<IEnumerable<IGrouping<string, TaskObject>>> GetTasksGroupedByStatusAsync();
     }
 }
